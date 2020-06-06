@@ -13,14 +13,23 @@ class ChatInput extends React.Component {
 		this.setState({ msg: e.target.value });
 	}
 
+	process_reply = (reply) => {
+		if (reply.msg) {
+			this.props.sendNewMsg({message: reply.msg, to: 0, pop: 0});
+		} else {
+			this.props.sendNewMsg({message: reply.data, to: 0, pop: 1});
+		}
+	}
+
 	handleSubmit = async (e) => {
 		e.preventDefault()
 		if (!this.state.msg)
 			return;
-		const msg = await sendMessages({id: 1, message: this.state.msg, to: 1});
-		console.log(msg);
-		this.props.sendNewMsg({message: this.state.msg, to: 1});
-		this.props.sendNewMsg({message: msg.data, to: 0});
+		const reply = await sendMessages({id: 1, message: this.state.msg, to: 1});
+		console.log(reply);
+		this.props.sendNewMsg({message: this.state.msg, to: 1, pop: 0});
+		this.process_reply(reply)
+		// this.props.sendNewMsg({message: reply.data, to: 0, pop: 1});
 		this.setState({ msg: ''});
 	}
 

@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import Chat from './Components/Chat';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 class App extends Component {
-
   render() {
     return (
       <div>
@@ -12,6 +11,5 @@ class App extends Component {
     );
   }
 }
-
 
 export default App;

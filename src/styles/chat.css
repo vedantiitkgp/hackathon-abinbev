@@ -56,6 +56,10 @@
   font-size: 110%;
 }
 
+.modal-link {
+  cursor: pointer;
+}
+
 .username {
   font-weight: bold;
   font-size: 0.9rem;
