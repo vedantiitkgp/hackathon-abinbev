@@ -2,10 +2,17 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App'
+import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
-import { store } from './chat';
+import Reducers from "./Reducers";
+import promise from 'redux-promise-middleware';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import * as serviceWorker from './serviceWorker';
+
+export const store = createStore(
+  Reducers,
+  applyMiddleware(promise)
+);
 
 ReactDOM.render(
   <Provider store={store}>

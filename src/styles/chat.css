@@ -1,0 +1,119 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap');
+
+.chat-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 80%;
+  margin: 0 auto;
+}
+
+.messages {
+  overflow-y: auto;
+  overflow-x: hidden;
+  flex-grow: 1;
+  padding: 2.5vh;
+  height: 70vh;
+}
+
+.chat-input {
+  overflow: hidden;
+  text-align: center;
+  flex-shrink: 0;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.message.right .username {
+  display: none;
+}
+
+.message.right {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 5px;
+}
+
+.message.right .msg-body {
+  background-color: #09a309;
+  color: white;
+}
+
+.message {
+  margin-bottom: 1vh;
+}
+.msg-body {
+  max-width: 60%;
+  display: inline-block;
+  padding: 1.5vh;
+  color: white;
+  background-color: #35404B;
+  border: 1px;
+  overflow: auto;
+  border-radius: 5px;
+  padding-right: 4vh;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 110%;
+}
+
+.username {
+  font-weight: bold;
+  font-size: 0.9rem;
+  color: #999;
+  margin-bottom: 5px;
+}
+
+.chat-input input[type="text"] {
+  margin: 1vh 1%;
+  height: 7vh;
+  -webkit-box-shadow: 0 1px 2px rgba(0,0,0,0.15);
+  -moz-box-shadow: 0 1px 2px rgba(0,0,0,0.15);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.15);
+  color: #1e1e1e;
+  font: 400 1rem "proxima-nova", sans-serif;
+  width: 80%;
+  border: 1px solid #dee0e0;
+  padding: 0 2%;
+  -webkit-transition: border-color 0.2s ease-in-out;
+  -moz-transition: border-color 0.2s ease-in-out;
+  transition: border-color 0.2s ease-in-out;
+  float: left;
+}
+
+.chat-input input[type="text"]:focus {
+  border: 1px solid #AF9570;
+  outline: none !important;
+}
+
+.chat-input input[type="submit"] {
+  background-color: #323232;
+  color: white;
+  font: 700 1rem "proxima-nova",sans-serif;
+  border: none;
+  float: left;
+  -webkit-transition: 0.3s ease-in-out;
+  -moz-transition: 0.3s ease-in-out;
+  transition: 0.3s ease-in-out;
+  text-decoration: none;
+  width: 15%;
+  height: 7vh;
+  text-align: center;
+  cursor: pointer;
+  -webkit-box-shadow: 0 1px 2px rgba(0,0,0,0.15);
+  -moz-box-shadow: 0 1px 2px rgba(0,0,0,0.15);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.15);
+  margin: 1vh 1%;
+}
+
+.chat-input input[type="submit"]:hover {
+  -webkit-box-shadow: 0 1px 10px rgba(0,0,0,0.15);
+  -moz-box-shadow: 0 1px 10px rgba(0,0,0,0.15);
+  box-shadow: 0 1px 10px rgba(0,0,0,0.15);
+  background-color: #1e1e1e;
+}
+
+@media only screen and (max-width: 500px) {
+  .chat-container {
+    height: 69%;
+  }
+}
