@@ -10,7 +10,7 @@ import { addMsg } from '../../Actions'
 class Chat extends React.Component {
 
 	componentDidMount() {
-		this.intervalID = setInterval(() => this.newMsgs(), 20000);
+		// this.intervalID = setInterval(() => this.newMsgs(), 20000);
 	}
 
   componentWillUnmount() {
@@ -18,8 +18,8 @@ class Chat extends React.Component {
 	}
 
   async newMsgs() {
-  	let msgs = await getMessages({id: 1});
-  	this.props.addMsg(msgs.message);
+  	// let msgs = await getMessages({id: 1});
+  	// this.props.addMsg(msgs.message);
   }
 
 	render() {

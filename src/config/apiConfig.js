@@ -2,7 +2,7 @@ import axios from 'axios'
 import { store } from '../index'
 
 export const HTTP = axios.create({
-    baseURL: 'https://localhost:8081',
+    baseURL: 'http://127.0.0.1:8000',
 });
 
 

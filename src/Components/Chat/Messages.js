@@ -19,7 +19,7 @@ class Messages extends React.Component {
 		return (
 			<div id="messageList" className="messages">
 				{this.props.messages.map(msg => {
-					return <Message to_ca={msg.to_ca} message={msg.message} />
+					return <Message to={msg.to} message={msg.message} />
 				})}
 			</div>
 		)

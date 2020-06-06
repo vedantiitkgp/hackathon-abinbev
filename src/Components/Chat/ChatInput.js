@@ -17,9 +17,10 @@ class ChatInput extends React.Component {
 		e.preventDefault()
 		if (!this.state.msg)
 			return;
-		const msg = await sendMessages({id: 1, message: this.state.msg});
+		const msg = await sendMessages({id: 1, message: this.state.msg, to: 1});
 		console.log(msg);
 		this.props.sendNewMsg({message: this.state.msg, to: 1});
+		this.props.sendNewMsg({message: msg.data, to: 0});
 		this.setState({ msg: ''});
 	}
 
