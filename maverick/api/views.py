@@ -13,5 +13,3 @@ class MessagesView(APIView):
 			reply = Moderator.moderator(request.data['message'])
 			response = {'data': reply}
 			return Response(response, status=status.HTTP_200_OK)
-		else:
-			return Response({'error': 'Bad request'}, status=status.HTTP_400_BAD_REQUEST)
