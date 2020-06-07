@@ -2,7 +2,7 @@ from django.apps import AppConfig
 import pandas
 import json
 
-from mid import mediatorCall
+from .mid import mediatorCall
 
 class ApiConfig(AppConfig):
     name = 'api'
@@ -12,5 +12,5 @@ class Moderator(AppConfig):
 
 	def moderator(msg):
 		qa=mediatorCall(msg)
-		output=qa.run_query(msg)
+		output=qa.run_query()
 		return output

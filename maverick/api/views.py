@@ -10,6 +10,5 @@ class MessagesView(APIView):
 	
 	def post(self, request, *args, **kwargs):
 		if request.method == 'POST':
-			reply = Moderator.moderator(request.data['message'])
-			response = {'data': reply}
+			response = Moderator.moderator(request.data['message'])
 			return Response(response, status=status.HTTP_200_OK)

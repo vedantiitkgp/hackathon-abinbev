@@ -1,23 +1,28 @@
 import pandas
 import json
 
-from timelog import timelogfun
+from .features.timelog import timelogfun
+from .features.tickets import ticket_func
 
 class mediatorCall:
     def __init__(self,msg):
         self.msg=msg
 
-    def run_query(self,msg):
-        msg=msg.split()
-        if(msg[0]=="Add" or msg[0]=="add"):
+    def run_query(self):
+        msg=self.msg.split()
+        temp = msg[0].lower()
+        if(temp=="add"):
             output=self.command_add(msg)
-        elif(msg[0]=="Show" or msg[0]=="show"):
+        elif(temp=="show"):
             output=self.command_show(msg)
-        elif(msg[0]=="Search" or msg[0]=="search"):
+        elif(temp=="search"):
             output=self.command_search(msg)
-        elif(msg[0]=="Change" or msg[0]=="change"):
+        elif(temp=="change"):
             output=self.command_change(msg)
-
+        elif(temp == "create"):
+            output=self.command_create(msg)
+        elif(temp == "close"):
+            output=self.command_close(msg)
         return output
 
     def command_add(self,msg):
@@ -30,18 +35,23 @@ class mediatorCall:
             return output
 
     def command_show(self,msg):
-        if(msg[1]=='employee' or msg[1]=='Employee'):
+        if(msg[1].lower()=='employee'):
             output=timelogfun.all_employees()
             #output="DEBUG"
             return output
-
-        if(msg[1]=='jobs' or msg[1]=='Jobs'):
+        elif(msg[1].lower()=='jobs'):
             output=timelogfun.all_jobs(msg[3])
             return output
-
-        if(msg[1]=='timelog' or msg[1]=='Timelog'):
+        elif(msg[1].lower()=='timelog'):
             output=timelogfun.get_timelog(msg[3],msg[5],msg[7])
             return output
+        elif(msg[1].lower()=='tickets'):
+            output=ticket_func.show_tickets()
+        elif(msg[1].lower()=='departments'):
+            output=ticket_func.show_departments()
+        elif(msg[1].lower()=='customers'):
+            output=ticket_func.show_customers()
+
 
     def command_search(self,msg):
             if(msg[1]=='employee' or msg[1]=='Employee'):
@@ -52,3 +62,14 @@ class mediatorCall:
         if(msg[1]=='job' or msg[1]=='Job'):
             output=timelogfun.change_job_status(msg[4],msg[6])
             return output
+
+    def command_create(self, msg):
+        if (msg[1].lower() == 'ticket'):
+            #create ticket by :customerId for :departmentId - ":title"
+            output = ticket_func.create_ticket(msg[3], msg[5], ' '.join(msg[7:]))
+            return output
+
+    def command_close(self, msg):
+        if (msg[1].lower() == 'ticket'):
+            #close ticket :ticketID
+            output = ticket_func.close_ticket(msg[2])
