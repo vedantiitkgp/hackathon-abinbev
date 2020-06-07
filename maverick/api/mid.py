@@ -1,8 +1,6 @@
-import pandas
-import json
-
 from .features.timelog import timelogfun
 from .features.tickets import ticket_func
+from .features.covidcases import covidcasesfun
 
 class mediatorCall:
     def __init__(self,msg):
@@ -37,7 +35,6 @@ class mediatorCall:
     def command_show(self,msg):
         if(msg[1].lower()=='employee'):
             output=timelogfun.all_employees()
-            #output="DEBUG"
             return output
         elif(msg[1].lower()=='jobs'):
             output=timelogfun.all_jobs(msg[3])
@@ -51,7 +48,9 @@ class mediatorCall:
             output=ticket_func.show_departments()
         elif(msg[1].lower()=='customers'):
             output=ticket_func.show_customers()
-
+        elif(msg[1].lower=='covid'):
+            output=covidcasesfun.cases(msg[4],msg[5])
+            return output
 
     def command_search(self,msg):
             if(msg[1]=='employee' or msg[1]=='Employee'):
