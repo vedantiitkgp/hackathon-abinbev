@@ -2,6 +2,7 @@ import pandas
 import json
 
 from timelog import timelogfun
+from covidcases import covidcasesfun
 
 class mediatorCall:
     def __init__(self,msg):
@@ -41,6 +42,10 @@ class mediatorCall:
 
         if(msg[1]=='timelog' or msg[1]=='Timelog'):
             output=timelogfun.get_timelog(msg[3],msg[5],msg[7])
+            return output
+        
+        if(msg[1].lower=='covid'):
+            output=covidcasesfun.cases(msg[4],msg[5])
             return output
 
     def command_search(self,msg):
