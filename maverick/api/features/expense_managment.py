@@ -38,6 +38,16 @@ class expense_management:
         output = {'msg':None,'data':data}
         return output
     
+    ################# Adding a funtion to get the list of all the accounts #################
+    def list_accounts(self):
+        response = requests.get(self.url+'/bankaccounts/?organization_id='+self.orgid,headers=self.headers)
+        account_list = []
+        for instance in json.loads(response.text)['bankaccounts']:
+            account_list.append([instance['account_id'],str(instance['account_name']),instance['balance']])
+        data = pd.DataFrame(account_list,columns=['account_id','account_name','balance'])
+        output = {'msg':None,'data':data}
+        return output
+    
     def delete_expense(self,expense_id):
         response = requests.delete(self.url+'/expenses/'+str(expense_id)+'?organization_id='+self.orgid,headers=self.headers)
         output = {'msg':json.loads(response.text)['message'],'data':None}
