@@ -6,6 +6,6 @@ class covidcasesfun:
         url='https://api.covid19india.org/state_district_wise.json'
         res=requests.get(url)
 
-        response= str(pd.DataFrame(pd.read_json(res.text)[state]).iloc[0,0][district])
-        res={'msg':response,'data':NULL}
+        response= pd.DataFrame(pd.DataFrame(pd.read_json(res.text)[state]).iloc[0,0][district])[['active','confirmed','recovered']]
+        res={'msg':None,'data':response}
         return res
