@@ -63,6 +63,9 @@ class mediatorCall:
         elif(msg[1].lower=='expense'):
             output=expense_management.list_expense_history(msg[2])
             return output
+        elif(msg[1].lower=='accounts'):
+            output=expense_management.list_accounts()
+            return output
 
     def command_search(self,msg):
             if(msg[1]=='employee' or msg[1]=='Employee'):
