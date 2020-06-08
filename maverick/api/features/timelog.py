@@ -13,7 +13,7 @@ class timelogfun:
 
         url=''.join([t1,str(EmployeeID),t2,fname,t3,lname,t4,email,t5])
         response=requests.post(url)
-        res={'msg':response.text,'data':None}
+        res={'msg':response.text['message'],'data':None}
         return res
 
     def all_employees():
@@ -45,7 +45,7 @@ class timelogfun:
         url=''.join([t,jobid,t1,status])
         response=requests.post(url)
         
-        res={'msg':response.text,'data':None}
+        res={'msg':response.text['message'],'data':None}
         return res
 
     def add_job(user,jobName,workdate,hrs):
@@ -58,7 +58,7 @@ class timelogfun:
         url=''.join([t,str(user),t1,jobName,t2,workdate,t3,t4,str(hrs)])
         response=requests.post(url)
         
-        res={'msg':response.text,'data':None}
+        res={'msg':response.text['message'],'data':None}
         return res
 
     def get_timelog(user,fromDate,toDate):
