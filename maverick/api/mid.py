@@ -22,6 +22,8 @@ class mediatorCall:
             output=self.command_create(msg)
         elif(temp == "close"):
             output=self.command_close(msg)
+        elif(temp == "delete"):
+            output=self.command_delete(msg)
         return output
 
     def command_add(self,msg):
@@ -31,6 +33,9 @@ class mediatorCall:
 
         elif(msg[1]=='job' or msg[1]=='Job'):
             output=timelogfun.add_job(msg[4],msg[2],msg[6],msg[8])
+            return output
+        elif(msg[1].lower=='expense'):
+            output=expense_management.create_expense(msg[3],msg[7],msg[5])
             return output
 
     def command_show(self,msg):
@@ -52,15 +57,27 @@ class mediatorCall:
         elif(msg[1].lower=='covid'):
             output=covidcasesfun.cases(msg[4],msg[5])
             return output
+        elif(msg[1].lower=='expenses'):
+            output=expense_management.list_expenses()
+            return output
+        elif(msg[1].lower=='expense'):
+            output=expense_management.list_expense_history(msg[2])
+            return output
 
     def command_search(self,msg):
             if(msg[1]=='employee' or msg[1]=='Employee'):
                 output=timelogfun.search_employee(msg[2])
                 return output
+            elif(msg[1].lower=='expense'):
+                output=expense_management.get_expense(msg[2])
+                return output
 
     def command_change(self,msg):
         if(msg[1]=='job' or msg[1]=='Job'):
             output=timelogfun.change_job_status(msg[4],msg[6])
+            return output
+        elif(msg[1].lower=='expense'):
+            output=expense_management.update_expense(msg[2],msg[4],msg[6],msg[8])
             return output
 
     def command_create(self, msg):
@@ -73,3 +90,8 @@ class mediatorCall:
         if (msg[1].lower() == 'ticket'):
             #close ticket :ticketID
             output = ticket_func.close_ticket(msg[2])
+            
+    def command_delete(self,msg):
+        if(msg[1].lower()=='expense'):
+            output=expense_management.delete_expense(msg[2])
+            return output
