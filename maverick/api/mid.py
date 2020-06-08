@@ -50,8 +50,12 @@ class mediatorCall:
             output=self.ticket_func.show_departments()
         elif(msg[1].lower()=='customers'):
             output=self.ticket_func.show_customers()
-        elif(msg[1].lower()=='covid'):
-            output=covidcasesfun.cases(msg[4],msg[5])
+        elif(msg[1].lower()=='covid' and msg[2].lower()=='cases'):
+            rest = msg[4:] 
+            sep = rest.index('in')
+            district = ' '.join(rest[:sep])
+            state = ' '.join(rest[sep+1:])
+            output=covidcasesfun.cases(state,district)
         elif(msg[1].lower()=='expenses'):
             output=self.expense_management.list_expenses()
         elif(msg[1].lower()=='expense'):
@@ -75,13 +79,13 @@ class mediatorCall:
         return output
 
     def command_create(self, msg):
-        if (msg[1].lower() == 'ticket'):
+        if(msg[1].lower() == 'ticket'):
             #create ticket by :customerId for :departmentId - ":title"
             output = self.ticket_func.create_ticket(msg[3], msg[5], ' '.join(msg[7:]))
         return output
 
     def command_close(self, msg):
-        if (msg[1].lower() == 'ticket'):
+        if(msg[1].lower() == 'ticket'):
             output = self.ticket_func.close_ticket(msg[2])
         return output
             
