@@ -13,7 +13,8 @@ class timelogfun:
 
         url=''.join([t1,str(EmployeeID),t2,fname,t3,lname,t4,email,t5])
         response=requests.post(url)
-        res={'msg':json.loads(response.text)['response']['message'],'data':None}
+        msg = 'Employee added successfully' if response.status_code == 200 else 'Some error while processing.'
+        res={'msg':msg,'data':None}
         return res
 
     def all_employees():
@@ -70,5 +71,5 @@ class timelogfun:
         url=''.join([t1,user,t2,fromDate,t3,toDate,t4])
         response=requests.post(url)
         
-        res={'msg':None,'data':pd.DataFrame(pd.read_json(response.text).iloc[1,0])[['employeeMailId','employeeFirstName','workDate','timelogId','jobName','jobIsActive','jobIsCompleted','hours']]}
+        res={'msg':None,'data':pd.DataFrame(pd.read_json(response.text).iloc[1,0])[['employeeFirstName','workDate','timelogId','jobName','jobIsCompleted','hours']]}
         return res

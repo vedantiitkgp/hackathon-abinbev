@@ -28,11 +28,11 @@ class mediatorCall:
         return output
 
     def command_add(self,msg):
-        if(msg[1]=='employee' or msg[1]=='Employee'):
+        if(msg[1].lower()=='employee'):
             output=timelogfun.add_employee(msg[2],msg[3],msg[4],msg[5])
-        elif(msg[1]=='job' or msg[1]=='Job'):
+        elif(msg[1].lower()=='job'):
             output=timelogfun.add_job(msg[4],msg[2],msg[6],msg[8])
-        elif(msg[1].lower=='expense'):
+        elif(msg[1].lower()=='expense'):
             output=expense_management.create_expense(msg[3],msg[7],msg[5])
         return output
 
@@ -49,27 +49,27 @@ class mediatorCall:
             output=self.ticket_func.show_departments()
         elif(msg[1].lower()=='customers'):
             output=self.ticket_func.show_customers()
-        elif(msg[1].lower=='covid'):
+        elif(msg[1].lower()=='covid'):
             output=covidcasesfun.cases(msg[4],msg[5])
-        elif(msg[1].lower=='expenses'):
+        elif(msg[1].lower()=='expenses'):
             output=expense_management.list_expenses()
-        elif(msg[1].lower=='expense'):
+        elif(msg[1].lower()=='expense'):
             output=expense_management.list_expense_history(msg[2])
-        elif(msg[1].lower=='accounts'):
+        elif(msg[1].lower()=='accounts'):
             output=expense_management.list_accounts()
         return output
 
     def command_search(self,msg):
-        if(msg[1]=='employee' or msg[1]=='Employee'):
+        if(msg[1].lower()=='employee'):
             output=timelogfun.search_employee(msg[2])
-        elif(msg[1].lower=='expense'):
+        elif(msg[1].lower()=='expense'):
             output=expense_management.get_expense(msg[2])
         return output
 
     def command_change(self,msg):
-        if(msg[1]=='job' or msg[1]=='Job'):
+        if(msg[1].lower()=='job'):
             output=timelogfun.change_job_status(msg[4],msg[6])
-        elif(msg[1].lower=='expense'):
+        elif(msg[1].lower()=='expense'):
             output=expense_management.update_expense(msg[2],msg[4],msg[6],msg[8])
         return output
 
