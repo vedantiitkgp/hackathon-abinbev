@@ -9,12 +9,17 @@ class ChatInput extends React.Component {
 		msg: ''
 	};
 
+	componentDidMount() {
+		const initMsg = "Hi there! I am your assistant BusinessBot.";
+		this.props.sendNewMsg({message: initMsg, to: 0, pop: 0});
+	}
+
 	handleChange = (e) => {
 		this.setState({ msg: e.target.value });
 	}
 
 	process_reply = (reply) => {
-		if (reply.msg) {
+		if (reply.msg != null) {
 			this.props.sendNewMsg({message: reply.msg, to: 0, pop: 0});
 		} else {
 			this.props.sendNewMsg({message: reply.data, to: 0, pop: 1});
@@ -25,12 +30,12 @@ class ChatInput extends React.Component {
 		e.preventDefault()
 		if (!this.state.msg)
 			return;
+		this.props.sendNewMsg({message: this.state.msg, to: 1, pop: 0});
+		this.setState({ msg: ''});
 		const reply = await sendMessages({id: 1, message: this.state.msg, to: 1});
 		console.log(reply);
-		this.props.sendNewMsg({message: this.state.msg, to: 1, pop: 0});
 		this.process_reply(reply)
 		// this.props.sendNewMsg({message: reply.data, to: 0, pop: 1});
-		this.setState({ msg: ''});
 	}
 
 	render() {

@@ -1,15 +1,18 @@
-import React, { Component } from 'react';
+import React from 'react';
 import Chat from './Components/Chat';
+import Sidebar from './Components/Sidebar';
+import { Container, Row } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-class App extends Component {
-  render() {
-    return (
-      <div>
-        <Chat />
-      </div>
-    );
-  }
+function App() {
+  return (
+    <Container fluid>
+    	<Row>
+	    	<Sidebar />
+	      <Chat />
+      </Row>
+    </Container>
+  );
 }
 
 export default App;

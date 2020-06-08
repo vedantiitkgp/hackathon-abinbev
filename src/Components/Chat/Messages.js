@@ -1,12 +1,8 @@
-import React from 'react'
+import React, { Component, Fragment } from 'react'
 import { connect } from 'react-redux'
-import { Modal, Table } from 'react-bootstrap'
+import TableModal from './Modal'
 
-class Messages extends React.Component {
-
-	state = {
-		showTable: false
-	}
+class Messages extends Component {
 
 	componentDidMount() {
 		const div = document.getElementById('messageList');
@@ -18,66 +14,38 @@ class Messages extends React.Component {
 		div.scrollTop = div.scrollHeight;
 	}
 
-	toggleTable = () => {
-		this.setState({showTable: !this.state.showTable});
-	}
-
 	render() {
-
+		var dt = new Date();
+		var h = dt.getHours(), m = dt.getMinutes();
+		m = (m < 10) ? ('0'+m) : m;
+		var time = (h > 12) ? (h-12 + ':' + m +' pm') : (h + ':' + m +' am');
 		return (
-			<div id="messageList" className="messages">
-				{this.props.messages.map(msg => {
-					const place = msg.to ? 'right' : 'left';
-					const headers = Object.keys(msg.message);
-					const n = msg.message[headers[0]].length;
-					console.log(headers, headers[0], n);
-					return (msg.pop) ?
-						<div className={`message ${place}`}>
-							<div className="msg-body modal-link" onClick={this.toggleTable}>
-								<u>Click Here</u>
+			<Fragment>
+				<div className="msg-date">
+					<hr className="date-line"/>
+					<span className="date">Today, {time}</span>
+					<hr className="date-line"/>
+				</div>
+				<div id="messageList" className="messages">
+					{this.props.messages.map((msg, i) => {
+						const place = msg.to ? 'right' : 'left';
+						let headers=[], n;
+						if (msg.message) {
+							headers = Object.keys(msg.message);
+							n = msg.message[headers[0]].length;
+						}
+						return (msg.pop) ?
+							<div key={i} className={`message ${place}`}>
+								<TableModal headers={headers} n={n} data={[msg.message]}/>
 							</div>
-							<Modal size="lg" show={this.state.showTable} onHide={this.toggleTable}>
-				        <Modal.Body>
-				        	<Table bordered hover>
-				        		<thead>
-					        		{
-					        			headers.map((name) => {
-					        				return (
-					        					<th>{name}</th>
-				        					);
-					        			})
-					        		}
-				        		</thead>
-				        		<tbody>
-				        			{
-				        				[...Array(n)].map((e, i) => {
-				        					return (
-				        						<tr>
-				        							{
-				        								headers.map((name) => {
-				        									return (
-				        										<td>
-				        											{msg.message[name][i]}
-				        										</td>
-			        										);
-				        								})
-				        							}
-				        						</tr>
-			        						);
-				        				})
-				        			}
-				        		</tbody>
-				        	</Table>
-				        </Modal.Body>
-							</Modal>
-						</div>
-					: <div className={`message ${place}`}>
-							<div className="msg-body">
-								{msg.message}
+						: <div key={i} className={`message ${place}`}>
+								<div className="msg-body">
+									{msg.message}
+								</div>
 							</div>
-						</div>
-				})}
-			</div>
+					})}
+				</div>
+			</Fragment>
 		)
 	}
 }
