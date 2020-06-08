@@ -4,10 +4,10 @@ import json
 import os 
 
 class expense_management:
-    def _init(self):
-        self.baseurl = 'https://books.zoho.in/api/v3'
+    def __init__(self):
+        self.url = 'https://books.zoho.in/api/v3'
         self.orgid = '60004824857'
-        self.token = '1000.ef49f2e68b65d2f573a2f337c0af5b03.d4b1362bbbf99530bd4f279d7872fc8c'
+        self.token = '1000.5a8129e6fe88c9a9056d7b439a2fe623.16c9cdee8584797fdeb3d496e31973e3'
         self.headers = {'Authorization':'Zoho-oauthtoken '+self.token}
     
     def create_expense(self,account_id,date,amount):
@@ -33,24 +33,26 @@ class expense_management:
         response = requests.get(self.url+'/expenses/?organization_id='+self.orgid,headers=self.headers)
         expense_list = []
         for instance in json.loads(response.text)['expenses']:
-            expense_list.append([instance['account_name'],str(instance['total']),instance['date']])
-        data = pd.DataFrame(expense_list,columns=['Expense Type','Amount','Date of Expense'])
+            expense_list.append([str(instance['expense_id']), str(instance['customer_id']), instance['account_name'],str(instance['total']),instance['date']])
+        data = pd.DataFrame(expense_list,columns=['Id', 'Customer Id', 'Expense Type','Amount','Date of Expense'])
         output = {'msg':None,'data':data}
         return output
     
     ################# Adding a funtion to get the list of all the accounts #################
     def list_accounts(self):
-        response = requests.get(self.url+'/bankaccounts/?organization_id='+self.orgid,headers=self.headers)
+        data = {'filter_by': 'AccountType.Expense'}
+        response = requests.get(self.url+'/chartofaccounts/?organization_id='+self.orgid, json=data, headers=self.headers)
         account_list = []
-        for instance in json.loads(response.text)['bankaccounts']:
-            account_list.append([instance['account_id'],str(instance['account_name']),instance['balance']])
-        data = pd.DataFrame(account_list,columns=['account_id','account_name','balance'])
+        for instance in json.loads(response.text)['chartofaccounts']:
+            account_list.append([instance['account_id'],str(instance['account_name']), instance['account_type']])
+        data = pd.DataFrame(account_list,columns=['account_id','account_name', 'Account Type'])
         output = {'msg':None,'data':data}
         return output
     
     def delete_expense(self,expense_id):
         response = requests.delete(self.url+'/expenses/'+str(expense_id)+'?organization_id='+self.orgid,headers=self.headers)
-        output = {'msg':json.loads(response.text)['message'],'data':None}
+        msg = 'Expense Deleted' if response.status_code == 200 else 'Some error while processing.'
+        output = {'msg': msg,'data':None}
         return output
     
     def list_expense_history(self,expense_id):
@@ -58,6 +60,6 @@ class expense_management:
         comments = [] 
         for comment in json.loads(response.text)['comments']:
             comments.append([comment['comment_id'],comment['description'],comment['date_description']])
-        data = pd.DataFrame(comments,columns=['Comment_Id','Description','Date_of_Description'])
+        data = pd.DataFrame(comments,columns=['Comment_Id','Description','Date'])
         output = {'msg':None ,'data':data}
         return output

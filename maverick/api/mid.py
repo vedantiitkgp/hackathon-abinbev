@@ -7,6 +7,7 @@ class mediatorCall:
     def __init__(self,msg):
         self.msg=msg
         self.ticket_func = ticket_func();
+        self.expense_management = expense_management();
 
     def run_query(self):
         msg=self.msg.split()
@@ -33,7 +34,7 @@ class mediatorCall:
         elif(msg[1].lower()=='job'):
             output=timelogfun.add_job(msg[4],msg[2],msg[6],msg[8])
         elif(msg[1].lower()=='expense'):
-            output=expense_management.create_expense(msg[3],msg[7],msg[5])
+            output=self.expense_management.create_expense(msg[3],msg[7],msg[5])
         return output
 
     def command_show(self,msg):
@@ -52,25 +53,25 @@ class mediatorCall:
         elif(msg[1].lower()=='covid'):
             output=covidcasesfun.cases(msg[4],msg[5])
         elif(msg[1].lower()=='expenses'):
-            output=expense_management.list_expenses()
+            output=self.expense_management.list_expenses()
         elif(msg[1].lower()=='expense'):
-            output=expense_management.list_expense_history(msg[2])
+            output=self.expense_management.list_expense_history(msg[2])
         elif(msg[1].lower()=='accounts'):
-            output=expense_management.list_accounts()
+            output=self.expense_management.list_accounts()
         return output
 
     def command_search(self,msg):
         if(msg[1].lower()=='employee'):
             output=timelogfun.search_employee(msg[2])
         elif(msg[1].lower()=='expense'):
-            output=expense_management.get_expense(msg[2])
+            output=self.expense_management.get_expense(msg[2])
         return output
 
     def command_change(self,msg):
         if(msg[1].lower()=='job'):
             output=timelogfun.change_job_status(msg[4],msg[6])
         elif(msg[1].lower()=='expense'):
-            output=expense_management.update_expense(msg[2],msg[4],msg[6],msg[8])
+            output=self.expense_management.update_expense(msg[2],msg[4],msg[6],msg[8])
         return output
 
     def command_create(self, msg):
@@ -86,5 +87,5 @@ class mediatorCall:
             
     def command_delete(self,msg):
         if(msg[1].lower()=='expense'):
-            output=expense_management.delete_expense(msg[2])
+            output=self.expense_management.delete_expense(msg[2])
         return output
