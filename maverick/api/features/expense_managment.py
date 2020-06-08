@@ -4,10 +4,10 @@ import json
 import os 
 
 class expense_management:
-    def __init__(self):
+    def __init__(self, token, orgId):
         self.url = 'https://books.zoho.in/api/v3'
-        self.orgid = '60004824857'
-        self.token = '1000.5a8129e6fe88c9a9056d7b439a2fe623.16c9cdee8584797fdeb3d496e31973e3'
+        self.orgid = orgId
+        self.token = token
         self.headers = {'Authorization':'Zoho-oauthtoken '+self.token}
     
     def create_expense(self,account_id,date,amount):
@@ -38,7 +38,6 @@ class expense_management:
         output = {'msg':None,'data':data}
         return output
     
-    ################# Adding a funtion to get the list of all the accounts #################
     def list_accounts(self):
         data = {'filter_by': 'AccountType.Expense'}
         response = requests.get(self.url+'/chartofaccounts/?organization_id='+self.orgid, json=data, headers=self.headers)

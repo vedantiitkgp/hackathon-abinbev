@@ -4,8 +4,11 @@ import json
 import pandas as pd
 
 class timelogfun:
-    def add_employee(fname, lname, email, EmployeeID):
-        t1="https://people.zoho.in/people/api/employee/records?authtoken=31d865f824a8c223a558ef393fe59a21&xmlData=<Request><Record><field name='EmployeeID'>"
+    def __init__(self, token):
+        self.token = token
+
+    def add_employee(self, fname, lname, email, EmployeeID):
+        t1="https://people.zoho.in/people/api/employee/records?authtoken="+self.token+"&xmlData=<Request><Record><field name='EmployeeID'>"
         t2="</field><field name='FirstName'>"
         t3="</field><field name='LastName'>"
         t4="</field><field name='EmailID'>"
@@ -17,31 +20,31 @@ class timelogfun:
         res={'msg':msg,'data':None}
         return res
 
-    def all_employees():
-        params={'authtoken': '31d865f824a8c223a558ef393fe59a21'}
+    def all_employees(self):
+        params={'authtoken': self.token}
         url='https://people.zoho.in/people/api/forms/P_EmployeeView/records'
         response=requests.post(url, params=params)
         
-        res={'msg':None,'data':pd.read_json(response.text)[['First Name','Last Name','Email ID','recordId','EmployeeID','Employee Role']]}
+        res={'msg':None,'data':pd.read_json(response.text)[['First Name','Email ID','recordId','EmployeeID','Employee Role']]}
         return res
 
-    def search_employee(email):
-        t1='https://people.zoho.in/people/api/forms/P_EmployeeView/records?authtoken=31d865f824a8c223a558ef393fe59a21&searchColumn=EMPLOYEEMAILALIAS&searchValue='
+    def search_employee(self, email):
+        t1='https://people.zoho.in/people/api/forms/P_EmployeeView/records?authtoken='+self.token+'&searchColumn=EMPLOYEEMAILALIAS&searchValue='
         url=''.join([t1,str(email)])
         response=requests.post(url)
         res={'msg':None,'data':pd.read_json(response.text)[['First Name','Last Name','Email ID','EmployeeID','Employee Role']]}
         return res
 
-    def all_jobs(value):
-        t='https://people.zoho.in/people/api/timetracker/getjobs?authtoken=31d865f824a8c223a558ef393fe59a21&assignedTo='
+    def all_jobs(self, value):
+        t='https://people.zoho.in/people/api/timetracker/getjobs?authtoken='+self.token+'&assignedTo='
         url=''.join([t,str(value)])
         response=requests.post(url)
         
         res={'msg':None,'data':pd.DataFrame(pd.read_json(response.text).iloc[1,0])[['jobName','jobStatus','fromDate','jobId']]}
         return res
 
-    def change_job_status(jobid,status):
-        t='https://people.zoho.in/people/api/timetracker/modifyjobstatus?authtoken=31d865f824a8c223a558ef393fe59a21&jobId='
+    def change_job_status(self, jobid,status):
+        t='https://people.zoho.in/people/api/timetracker/modifyjobstatus?authtoken='+self.token+'&jobId='
         t1='&jobStatus='
         url=''.join([t,jobid,t1,status])
         response=requests.post(url)
@@ -49,8 +52,8 @@ class timelogfun:
         res={'msg':json.loads(response.text)['response']['message'],'data':None}
         return res
 
-    def add_job(user,jobName,workdate,hrs):
-        t='http://people.zoho.in/people/api/timetracker/addtimelog?authtoken=31d865f824a8c223a558ef393fe59a21&user='
+    def add_job(self, user,jobName,workdate,hrs):
+        t='http://people.zoho.in/people/api/timetracker/addtimelog?authtoken='+self.token+'&user='
         t1='&jobName='
         t2='&workDate='
         t3='&billingStatus=Billable'
@@ -62,8 +65,8 @@ class timelogfun:
         res={'msg':json.loads(response.text)['response']['message'],'data':None}
         return res
 
-    def get_timelog(user,fromDate,toDate):
-        t1='http://people.zoho.in/people/api/timetracker/gettimelogs?authtoken=31d865f824a8c223a558ef393fe59a21&user='
+    def get_timelog(self, user,fromDate,toDate):
+        t1='http://people.zoho.in/people/api/timetracker/gettimelogs?authtoken='+self.token+'&user='
         t2='&jobId=all&fromDate='
         t3='&toDate='
         t4='&billingStatus=all'

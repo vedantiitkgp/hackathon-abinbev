@@ -3,15 +3,12 @@ import pandas as pd
 import json
 
 class ticket_func:
-	def __init__(self):
-		#SCOPE = Desk.settings.READ,Desk.basic.READ,Desk.tickets.ALL,Desk.contacts.READ
+	def __init__(self, token, orgId):
 		self.baseurl = "https://desk.zoho.in/api/v1"
-		self.orgid = "60004833729"
-		self.token = "1000.2de677261948793e7993caa3e30cde26.e47f2de9a2ecbc47142c7e1437bf934b"
+		self.orgid = orgId
+		self.token = token
 		
 		self.headers = {'orgId': self.orgid, 'Authorization': 'Zoho-oauthtoken '+self.token}
-		# self.customerId = '26154000000064365'
-		# self.deptId = '26154000000010772'
 
 	def create_ticket(self, customerId, deptId, title):
 		title = title.replace('"', '')
