@@ -27,7 +27,6 @@ class mediatorCall:
         url = 'https://api.wit.ai/message?v=20200621&q='+ urllib.parse.quote(self.msg)
         message_intent = ''
         message_entities = {}
-        # return {'msg': self.get_message(url), 'data': None}
         intents_list , entity_list = self.get_message(url)
         message_intent = intents_list[0]['name']
         message_intent = message_intent.split("_")
@@ -54,7 +53,6 @@ class mediatorCall:
         response = requests.get(url, headers = self.headers)
         response_json = json.loads(response.text)
         #Getting Intents
-        # return response_json
         intents_list = response_json['intents']
         #Getting Entities
         entity_whole_list = []
@@ -81,7 +79,7 @@ class mediatorCall:
         elif(intent=='job'):
             output = self.timelogfun.add_job(entities['wit$email'],entities['job_type'],entities['date'],entities['duration'])
         elif(intent=='expense'):
-            account_id = self.expense_managment.get_account_id(entities['account_name'])
+            account_id = self.expense_management.get_account_id(entities['account_name'])
             output = self.expense_management.create_expense(account_id,entities['date'],entities['amount'])
         return output
 
@@ -117,7 +115,7 @@ class mediatorCall:
         if(intent=='job'):
             output = self.timelogfun.change_job_status(entities['job_id'],entities['status'])
         elif(intent=='expense'):
-            account_id = self.expense_managment.get_account_id(entities['account_name'])
+            account_id = self.expense_management.get_account_id(entities['account_name'])
             output=self.expense_management.update_expense(entities['expense_id'],account_id,entities['date'],entities['amount'])
         return output
 

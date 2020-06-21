@@ -62,3 +62,12 @@ class expense_management:
         data = pd.DataFrame(comments,columns=['Comment_Id','Description','Date'])
         output = {'msg':None ,'data':data}
         return output
+    
+    #Helper Function
+    def get_account_id(self,account_name):
+        data = {'filter_by': 'AccountType.Expense'}
+        response = requests.get(self.url+'/chartofaccounts/?organization_id='+self.orgid, json=data, headers=self.headers)
+        account_list = {}
+        for instance in json.loads(response.text)['chartofaccounts']:
+            account_list[instance['account_name'].lower()] = instance['account_id']
+        return account_list[account_name.lower()]

@@ -12,6 +12,7 @@ class ticket_func:
 
 	def create_ticket(self, customerId, title):
 		title = title.replace('"', '')
+		response = requests.get(self.baseurl + '/departments', headers=self.headers)
 		deptId = pd.DataFrame(json.loads(response.text)['data'])['id'][0]
 		data = {'subject': title, 'departmentId': deptId, 'contactId': customerId}
 		response = requests.post(self.baseurl+'/tickets', json = data, headers = self.headers)
