@@ -36,7 +36,7 @@ export default class TableModal extends Component {
 	        			{
 	        				[...Array(this.props.n)].map((e, i) => {
 	        					return (
-	        						<tr key={e+i}>
+	        						<tr key={i}>
 	        							{
 	        								this.props.headers.map((name) => {
 	        									return (
