@@ -11,6 +11,9 @@ class Moderator(AppConfig):
 	name = 'moderator'
 
 	def moderator(msg):
+		# qa=mediatorCall(msg)
+		# output=qa.run_query()
+		# return output
 		try:
 			qa=mediatorCall(msg)
 			output=qa.run_query()

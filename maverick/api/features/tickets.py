@@ -10,8 +10,9 @@ class ticket_func:
 		
 		self.headers = {'orgId': self.orgid, 'Authorization': 'Zoho-oauthtoken '+self.token}
 
-	def create_ticket(self, customerId, deptId, title):
+	def create_ticket(self, customerId, title):
 		title = title.replace('"', '')
+		deptId = pd.DataFrame(json.loads(response.text)['data'])['id'][0]
 		data = {'subject': title, 'departmentId': deptId, 'contactId': customerId}
 		response = requests.post(self.baseurl+'/tickets', json = data, headers = self.headers)
 		msg = 'Ticket created successfully' if response.status_code == 200 else 'Some error while processing.'

@@ -2,12 +2,15 @@ import requests
 import os
 import json
 import pandas as pd
+from random import randint
 
 class timelogfun:
     def __init__(self, token):
         self.token = token
 
-    def add_employee(self, fname, lname, email, EmployeeID):
+    def add_employee(self, fname, lname, email):
+        EmployeeID= randint(1000, 2000)
+
         t1="https://people.zoho.in/people/api/employee/records?authtoken="+self.token+"&xmlData=<Request><Record><field name='EmployeeID'>"
         t2="</field><field name='FirstName'>"
         t3="</field><field name='LastName'>"
@@ -29,18 +32,27 @@ class timelogfun:
         return res
 
     def search_employee(self, email):
-        t1='https://people.zoho.in/people/api/forms/P_EmployeeView/records?authtoken='+self.token+'&searchColumn=EMPLOYEEMAILALIAS&searchValue='
-        url=''.join([t1,str(email)])
-        response=requests.post(url)
-        res={'msg':None,'data':pd.read_json(response.text)[['First Name','Last Name','Email ID','EmployeeID','Employee Role']]}
+        try:
+            t1='https://people.zoho.in/people/api/forms/P_EmployeeView/records?authtoken='+self.token+'&searchColumn=EMPLOYEEMAILALIAS&searchValue='
+            url=''.join([t1,str(email)])
+            response=requests.post(url)
+            res={'msg':None,'data':pd.read_json(response.text)[['First Name','Last Name','Email ID','EmployeeID','Employee Role']]}
+        except:
+            res={'msg':"Employee with this email doesn't exist" ,'data':None}
+       
         return res
 
     def all_jobs(self, value):
-        t='https://people.zoho.in/people/api/timetracker/getjobs?authtoken='+self.token+'&assignedTo='
-        url=''.join([t,str(value)])
-        response=requests.post(url)
-        
-        res={'msg':None,'data':pd.DataFrame(pd.read_json(response.text).iloc[1,0])[['jobName','jobStatus','fromDate','jobId']]}
+        try:
+            t='https://people.zoho.in/people/api/timetracker/getjobs?authtoken='+self.token+'&assignedTo='
+            url=''.join([t,str(value)])
+            response=requests.post(url)
+           
+            res={'msg':None,'data':pd.DataFrame(pd.read_json(response.text).iloc[1,0])[['jobName','jobStatus','fromDate','jobId']]}
+       
+        except:
+            res={'msg':"Employee's job record doesn't exist" ,'data':None}
+
         return res
 
     def change_job_status(self, jobid,status):
@@ -63,16 +75,4 @@ class timelogfun:
         response=requests.post(url)
         
         res={'msg':json.loads(response.text)['response']['message'],'data':None}
-        return res
-
-    def get_timelog(self, user,fromDate,toDate):
-        t1='http://people.zoho.in/people/api/timetracker/gettimelogs?authtoken='+self.token+'&user='
-        t2='&jobId=all&fromDate='
-        t3='&toDate='
-        t4='&billingStatus=all'
-
-        url=''.join([t1,user,t2,fromDate,t3,toDate,t4])
-        response=requests.post(url)
-        
-        res={'msg':None,'data':pd.DataFrame(pd.read_json(response.text).iloc[1,0])[['employeeFirstName','workDate','timelogId','jobName','jobIsCompleted','hours']]}
         return res
