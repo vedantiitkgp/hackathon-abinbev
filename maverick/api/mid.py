@@ -1,3 +1,6 @@
+import os
+import dialogflow
+from google.api_core.exceptions import InvalidArgument
 from .features.timelog import timelogfun
 from .features.tickets import ticket_func
 from .features.covidcases import covidcasesfun
@@ -23,16 +26,30 @@ class mediatorCall:
         self.timelogfun = timelogfun(tok_gen.timelog())
 
     def run_query(self):
-        ## Recognizing the Intent Out The Message ##
-        url = 'https://api.wit.ai/message?v=20200621&q='+ urllib.parse.quote(self.msg)
-        message_intent = ''
-        message_entities = {}
-        intents_list , entity_list = self.get_message(url)
-        message_intent = intents_list[0]['name']
-        message_intent = message_intent.split("_")
-        for entity in entity_list :
-            message_entities[entity['type']] = entity['word']
-        temp = message_intent[0].lower()
+        os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = './api-key/api-key.json'
+        DIALOGFLOW_PROJECT_ID = 'maverick-wlgqtc'
+        DIALOGFLOW_LANGUAGE_CODE = 'en'
+        SESSION_ID = 'me'
+
+        text_to_be_analyzed = 'Yes' 
+
+        session_client = dialogflow.SessionsClient()
+        session = session_client.session_path(DIALOGFLOW_PROJECT_ID, SESSION_ID)
+        text_input = dialogflow.types.TextInput(text=text_to_be_analyzed, language_code=DIALOGFLOW_LANGUAGE_CODE)
+        query_input = dialogflow.types.QueryInput(text=text_input)
+        try:
+            temp = session_client.detect_intent(session=session, query_input=query_input)
+        except InvalidArgument:
+            raise
+        # url = 'https://api.wit.ai/message?v=20200621&q='+ urllib.parse.quote(self.msg)
+        # message_intent = ''
+        # message_entities = {}
+        # intents_list , entity_list = self.get_message(url)
+        # message_intent = intents_list[0]['name']
+        # message_intent = message_intent.split("_")
+        # for entity in entity_list :
+        #     message_entities[entity['type']] = entity['word']
+        # temp = message_intent[0].lower()
         if(temp=="add"):
             output=self.command_add(message_intent[1].lower(),message_entities)
         elif(temp=="show"):
