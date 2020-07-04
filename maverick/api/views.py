@@ -20,7 +20,11 @@ class MessagesView(APIView):
 def WebHookView(request):
 	req = json.loads(request.body)
 	intent = req.get('queryResult').get('intent').get('displayName')
-	params = req.get('queryResult').get('parameters')
+	params = dict(req.get('queryResult').get('parameters'))
+	if req.get('queryResult').get('outputContexts'):
+		params['flight_todo'] = req.get('queryResult').get('queryText')
+		params['flight_place'] = req.get('queryResult').get('outputContexts')[0].get('parameters').get('geo-city')
+		params['news_cat'] = req.get('queryResult').get('outputContexts')[0].get('parameters').get('category')
 	resp = Webhook.moderator(intent, params)
 	# fulfillmentText = {'fulfillmentText': resp}
 	response = {

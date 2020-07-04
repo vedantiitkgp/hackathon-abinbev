@@ -10,7 +10,8 @@ from keras.models import load_model
 from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer 
 import os
-from .sports import sports_intent
+from datetime import datetime, timedelta, date
+from .calendar import calendar_fun
 
 nltk.download('wordnet')
 nltk.download('stopwords')
@@ -35,9 +36,11 @@ class news_fun:
 	def get_result(self, intent, parameters):
 		if (intent == 'get'):
 			return self.news_intent(parameters)
+		elif (intent == 'get - yes - yes'):
+			return self.set_remainder(parameters)
 
 	def news_intent(self, params):
-		if not params:
+		if 'category' not in params:
 			THIS_FOLDER = os.path.dirname(os.path.abspath(__file__))
 			mod = os.path.join(THIS_FOLDER, 'model.h5')
 			model = tf.keras.models.load_model(mod,custom_objects={'KerasLayer':hub.KerasLayer})
@@ -69,6 +72,12 @@ class news_fun:
 			data=pd.DataFrame(json.loads(response.text)['articles'])[['title','url']]
 			output = {'msg': None, 'data': data.to_dict('list'), 'category': params['category']}
 			return output
+
+	def set_remainder(self, params):
+		c = calendar_fun()
+		if 'news_cat' in params:
+			return c.set_remainder(params)
+			
 
 # a = news_fun()
 # b = a.news_intent({'category': 'sport'})

@@ -14,8 +14,8 @@ from .features.expense_managment import expense_management
 from .features.token_generator import token_generator
 from .getters.news import news_fun
 from .getters.sports import sports_intent
+from .getters.movies import movies_fun
 from .getters.calendar import calendar_fun
-from .getters.sports import sports_intent
 
 class ApiConfig(AppConfig):
 		name = 'api'
@@ -37,12 +37,14 @@ class Moderator(AppConfig):
 			if (msg == 'sports_schedule'):
 				resp = sports_intent()
 				print('call2')
+			elif (msg == 'entertainment_schedule'):
+				resp = movies_fun()
 			else:
 				temp = session_client.detect_intent(session=session, query_input=query_input)
 				# return (temp.query_result.fulfillment_text)
 				reply = dict(temp.query_result.webhook_payload)
 				resp = {'msg': None, 'data': None}
-				if reply:
+				if reply and reply.get('msg') or reply.get('data'):
 					resp['msg'] = reply.get('msg', None)
 					# print(type(reply['data']))
 					if reply.get('data'):
@@ -69,7 +71,7 @@ class Webhook(AppConfig):
 	
 	def moderator(intent, parameters):
 		intents = intent.split("_")
-		if (intents[0] == 'calendar'):
+		if (intents[0] == 'calendar' or intents[0] == 'calender'):
 			fun = calendar_fun()
 		elif (intents[0] == 'sports'):
 			fun = sports_intent()

@@ -6,6 +6,7 @@ from oauth2client.client import OAuth2WebServerFlow
 from oauth2client import tools
 from datetime import datetime, timedelta, date
 import pandas as pd
+from .places import get_bars, get_tourism
 
 # If modifying these scopes, delete the file token.pickle.
 SCOPES = ['https://www.googleapis.com/auth/calendar']
@@ -32,15 +33,22 @@ class calendar_fun:
         self.service = build('calendar', 'v3', http=http, developerKey='AIzaSyD8hYjZkcTfohL4wCdFnlVVVj3xyrEBlt0')
 
     def get_result(self, intent, parameters):
+        print(intent)
         if (intent == 'get_events'):
             return self.get_events(parameters)
-        else:
+        elif (intent == 'book_flight'):
+            return self.book_flight(parameters)
+        elif (intent == 'create_event'):
             return self.create_event(parameters)
+        elif (intent == 'book_flight - bars' or 'book_flight - places'):
+            return self.get_flight_places(intent, parameters)
 
     def get_events(self, params):
         # now = datetime.utcnow().isoformat() + 'Z' # 'Z' indicates UTC time
         # print('Getting the upcoming 10 events')
-        events_result = self.service.events().list(calendarId='primary', timeMin=params['date'], maxResults=10, singleEvents=True, orderBy='startTime').execute()
+        timeS = params['date'][:10] + 'T00:00:00+05:30'
+        timeE = str(pd.to_datetime(params['date'][:10], format='%Y-%m-%d') + timedelta(days=1))[:10] + 'T00:00:00+05:30'
+        events_result = self.service.events().list(calendarId='primary', timeMin=timeS, timeMax=timeE, singleEvents=True, orderBy='startTime').execute()
         events = events_result.get('items', [])
         events_list = []
         if not events:
@@ -76,3 +84,44 @@ class calendar_fun:
             return {'msg': 'Event added successfully.', 'data': None}
         except:
             return{'msg': 'Error in adding event', 'data': None}
+
+    def book_flight(self, params):
+        title = "Trip to " + params['geo-city']
+        startdate = params['date'][:10]
+        endDate = str(pd.to_datetime(params['date'][:10], format='%Y-%m-%d') + timedelta(days=1))[:10]
+        event = {'summary': title,
+                 'start': {
+                     'date': startdate,
+                     },
+                 'end': {
+                     'date': endDate,
+                     },
+                 'location': params['geo-city']
+                 }
+        self.service.events().insert(calendarId='primary', sendUpdates='all', body=event).execute()
+        return {'msg': None, 'data': None}
+
+    def get_flight_places(self, intent, params):
+        if (intent == 'book_flight - bars'):
+            return get_bars(params['flight_place'])
+        else:
+            print('getting tourism', params['flight_place'])
+            return get_tourism(params['flight_place'])
+
+    def set_remainder(self, params):
+        if params['news_cat'] == 'sports':
+            title = "Sports match"
+        elif params['news_cat'] == 'entertainment':
+            title = "Movie release"
+        startdate = str(date.today() + timedelta(days=1))
+        endDate = str(date.today() + timedelta(days=2))
+        event = {'summary': title,
+                         'start': {
+                                 'date': startdate,
+                                 },
+                         'end': {
+                                 'date': endDate,
+                                 }
+                         }
+        self.service.events().insert(calendarId='primary', sendUpdates='all', body=event).execute()
+        return {'msg': None, 'data': None}
