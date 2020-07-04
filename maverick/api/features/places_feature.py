@@ -27,5 +27,30 @@ def get_bars(city):
     
     return {'msg':None, 'data':pd.DataFrame(data)} 
 
+def get_tourism(city):
+
+    cid = "AQXFKLPGGE3SUYUXII2U3AFJNKMPJYWTBJS5ATPLL0ELAIBK"
+    cs = "EFU3VUIHQUY33OJIZ504J2V5EXD1MVKG5BEO1S3LGNV00X1E"
+
+    t = "https://api.foursquare.com/v2/venues/explore?near=" + city + "&limit=3" + "&section=outdoors"
+    url = t + "&client_id=" + cid + "&client_secret=" + cs + "&v=20200704"
+
+    response = requests.get(url)
+    out = json.loads(response.text)['response']['groups'][0]['items']
+
+    data={}
+    data['Place'] = []
+    data['Locality'] = []
+    
+    for i in range(3):
+        data['Place'].append(out[i]['venue']['name'])
+        try:
+        	data['Locality'].append(out[i]['venue']['location']['address'])
+        except:
+        	data['Locality'].append(city)
+    
+    return {'msg':None, 'data':pd.DataFrame(data)}	
+
 
 get_bars("Bengaluru")['data']
+get_tourism("Delhi")['data']
