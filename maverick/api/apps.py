@@ -5,6 +5,7 @@ from google.protobuf.json_format import MessageToJson
 from io import StringIO
 import pandas as pd
 import json
+import os
 
 from .mid import mediatorCall
 from .features.timelog import timelogfun
@@ -24,7 +25,7 @@ class Moderator(AppConfig):
 	name = 'moderator'
 
 	def moderator(msg):
-		# os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = 'key.json'
+		os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'key.json')
 		DIALOGFLOW_PROJECT_ID = 'maverick-final-calowo'
 		DIALOGFLOW_LANGUAGE_CODE = 'en'
 		SESSION_ID = 'me'

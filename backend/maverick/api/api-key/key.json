@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "maverick-final-calowo",
+  "private_key_id": "a1d4db22f85600fc23f37efed1ab31c9a1e04b22",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEugIBADANBgkqhkiG9w0BAQEFAASCBKQwggSgAgEAAoIBAQC6lvlpPK+vs5v6\nrFkp9Vir/wyzvt+s4wtTXj/K4+6ArRPahrjqooXQ5M0D8xeUAkr2D2enLnknsMeB\nloMz3XP18tor/8LEN1dwFTqb83+ZJxfAKS8MN8D8J2fRrnprboV/Qekm0RTUuznd\nE8ZShQlOj/KENFBuYeLEAO+GF9BAeQljOFD2NMa5pp66BnNoiNZVBrJQUMJyVW0t\n7Bvj9Qho3752EwqQ6kDUpRsB07ydJxOAkWE6cZ9D5TSAenQ63inPUbcdGLM3CvAf\nAbUbMFBKiGKv4OTu22G2shPTbs0dy+nK6MvU3EcNuwElYAOIFDsUMp8Rq+Mtgi93\nwBzlPCaxAgMBAAECggEAFd9WgY7098NVzpzXL2dUo4XYdPYUJYGwbU+EKhoNtl0D\nkadfBBc02UPG4haEDiw2IhG0eHkmx9+txVuxydnE6wDysPtwVvy3RdrhNdCFhbwa\nyUJyosui1lQetApQTKlmIgCljnCuMNE5M1iK9Bem+4P9fWCeCJB2KvyCl20Rcwsh\noWa58z1XoV2l2fv9KJytNy3QRoQykN8LO+Lhkudzp+xGF827CCUmnwGyoVO6jzCd\nYLwmwNN5IKPznWZK58xZSawqgz/LaqZbt4QxP2ceKkOWI6jy+IZHwxSzPcdUhrC2\nNXPbhRTNyunAleMpVBKlNSc0lOyft0Mvw3vHtyaduQKBgQDz6eK7RAom0Ozd+0E/\nqVPnHFJyJ1+ITyS+VHE2MF6M4wasJ7IicOP4q3TsnjVr9lCIkntJlPe1DRNtG6Yg\nk7JDaM4fuuvNgfovJ3dn7YkERdaZrFRsoUJHacMePvsTjTokYlLjszklcZuQSsu5\nx2lzjIv36LtQZoQy6tGppKfSqQKBgQDD1es1yPun7+oCiYAdVGMQPbjwLYZtn5gH\n50r0gQxl8SikZ3wocEKjPoAKGXq4tKDD8UFTQgQfqzfjiCNjUwW5wVVUIdKR1+mE\nJORJIn6pUpU0ooaYuA6IKJ705cDx6t3tCnIgiFyAz4jap2lugReAy8UzzcPnQDU5\nBaBBWFHAyQJ/DVa9D4CpDXZffcQ/zTt1Wy4xVAzTLKEnYUE877m1cf74XnHNTBTg\nYrj9q/L6+Ox/eviHxX5gDYapiU35x85L8WPJ4fJW8uYoyGtgHE7hL1qiYcUK2OX4\nue8OvJi1IlyW0WaPIeSrO2D7IOj2OzKskaUeAnC3za3NjPtKe/yFMQKBgFeJER/z\nfHluhd0odPmnNLiXvkitML9jbONrgVeVL2OJzi7eiuLQexjY4QaiqPZS1uF+v0Jl\n6c32DH9J5PeKrq5/OpLmo2bJafnFO71tC8zHuyXR1/P/oY8/CP5SjFIWN6iy2Jyu\nFxsEqRmDZ18bmNPbQYSMXxrI2oFogF91COXxAoGANdsvD72EAg2ArOH5uZUC3fQ/\nZeWomgPlrtcbcyAo5s+sAUiUSbCKThckXNYoBp+pWfQ4QgS+kO/cjBUUvZAgA0tJ\nAORnq5HTbuwrtpzdHA2M77/tYUR5Wr6utq1s1JEfh5LoLyHj7D9RGZCglVZvUsym\nYlxMTdCk+Pz7WEXAHAw=\n-----END PRIVATE KEY-----\n",
+  "client_email": "dialogflow-kqhoae@maverick-final-calowo.iam.gserviceaccount.com",
+  "client_id": "102696307648471132254",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/dialogflow-kqhoae%40maverick-final-calowo.iam.gserviceaccount.com"
+}
