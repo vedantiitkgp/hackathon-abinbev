@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import { Modal, Table } from 'react-bootstrap'
+import { Modal, Table, Button } from 'react-bootstrap'
 
 export default class TableModal extends Component {
 
@@ -26,7 +26,7 @@ export default class TableModal extends Component {
 			        		{
 			        			this.props.headers.map((name) => {
 			        				return (
-			        					<th key={name}>{name}</th>
+			        					<th key={name}>{(name === 'url') ? 'Article' : name}</th>
 		        					);
 			        			})
 			        		}
@@ -39,11 +39,22 @@ export default class TableModal extends Component {
 	        						<tr key={i}>
 	        							{
 	        								this.props.headers.map((name) => {
-	        									return (
-	        										<td key={name + i}>
-	        											{data[name][i]}
-	        										</td>
-	      										);
+	        									if (name === 'url') {
+	        										return (
+        												<td key={name + i}>
+        													<a href={data[name][i]} target="_blank">
+		        												<Button variant="info">View</Button>
+	        												</a>
+        												</td>
+        											);
+	        									}
+	        									else {
+	        										return (
+		        										<td key={name + i}>
+		        											{data[name][i]}
+		        										</td>
+		      										);
+	        									}
 	        								})
 	        							}
 	        						</tr>
