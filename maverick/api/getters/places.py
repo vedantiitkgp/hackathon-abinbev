@@ -5,7 +5,7 @@ import pandas as pd
 
 def get_bars(city):
     headers = {'Accept': 'application/json',
-               'user-key': '3d5d5ccc1b0880ef97f305de0d07dc92'}
+               'user-key': '***********'}
     url = 'https://developers.zomato.com/api/v2.1/cities?q=' + city
     response = requests.get(url, headers=headers)
 
@@ -34,8 +34,8 @@ def get_bars(city):
 
 def get_tourism(city):
 
-    cid = "AQXFKLPGGE3SUYUXII2U3AFJNKMPJYWTBJS5ATPLL0ELAIBK"
-    cs = "EFU3VUIHQUY33OJIZ504J2V5EXD1MVKG5BEO1S3LGNV00X1E"
+    cid = "*********"
+    cs = "*************"
 
     t = "https://api.foursquare.com/v2/venues/explore?near=" + \
         city + "&limit=3" + "&section=outdoors"

@@ -17,8 +17,8 @@ class calendar_fun:
     def __init__(self):
         print('calender function is being called')
         FLOW = OAuth2WebServerFlow(
-            client_id='480509766318-n95p64vh8budq9megb29tiekuumvho4r.apps.googleusercontent.com',
-            client_secret='96St0SCvltFDQWSCeczGSt1F',
+            client_id='*************',
+            client_secret='***********',
             scope='https://www.googleapis.com/auth/calendar',
             user_agent='maverick/2.0')
 
@@ -32,7 +32,7 @@ class calendar_fun:
         http = credentials.authorize(http)
 
         self.service = build('calendar', 'v3', http=http,
-                             developerKey='AIzaSyD8hYjZkcTfohL4wCdFnlVVVj3xyrEBlt0')
+                             developerKey='************')
 
     def get_result(self, intent, parameters):
         print(intent)

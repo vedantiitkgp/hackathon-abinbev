@@ -25,3 +25,4 @@ yarn-error.log*
 #API Keys
 maverick/api/api-key/
 maverick api/key.json
+maverick/api/getters/credentials.json
