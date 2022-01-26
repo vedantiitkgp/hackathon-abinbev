@@ -1,6 +1,12 @@
-# Master Repository for Ab-Inbev hackathon
+# Master Repository for Ab-Inbev hackathon Submission 
 
-## EVA
+![MIT License](https://img.shields.io/apm/l/vim-mode?style=for-the-badge)
+
+A smart proactive chat assistant for all the stakeholders of ABInBev which identifies intent, supplies users with information and performs contextual actions
+
+> Building Technology upon technologies
+
+## EVA - Ever eVolving Autonomus Bot
 
 <img width="1753" alt="Screenshot 2022-01-26 at 9 43 48 AM" src="https://user-images.githubusercontent.com/32813089/151103143-92eac8a0-2e5b-4e44-b1e7-827d05bcb9c4.png">
 
@@ -61,6 +67,7 @@ git clone https://github.com/vedantiitkgp/hackathon-abinbev.git
 ```
 cd hackathon-abinbev
 ```
+Adding API Keys at respective positions 
 
 ### Frontend - React
 
