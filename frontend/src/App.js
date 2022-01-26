@@ -9,7 +9,7 @@ export default class App extends React.Component {
 		loginPage: false,
 		name: 'Eva',
 		subtitle: 'Ever eVolving Autonomous Bot',
-		url: 'https://9c0a991e4094.ngrok.io'
+		url: 'http://127.0.0.1:8000'
 	}
 
 	setBot = (name) => {
@@ -32,8 +32,8 @@ export default class App extends React.Component {
 	    		(this.state.loginPage) ?
 			    		<Row>
 					    	<Sidebar name={this.state.name} subtitle={this.state.subtitle}/>
-					      <Chat name={this.state.name} url={this.state.url} />
-				      </Row>
+					      	<Chat name={this.state.name} url={this.state.url} />
+				      	</Row>
 			      : <Row>
 			      		<Card className="text-center my-auto mx-5" style={{ left: '24em', top: '13em', width: '18rem' }}>
 			      			<Card.Body>
